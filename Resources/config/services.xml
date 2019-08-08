@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<container xmlns="http://symfony.com/schema/dic/services"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+    <services>
+        <service id="security_yii2.user.provider"
+                 class="maranqz\Bundle\SecurityYii2Bundle\User\Yii2UserProvider">
+            <argument type="service" id="Doctrine\Common\Persistence\ManagerRegistry"/> <!-- ManagerRegistry -->
+            <argument/>
+        </service>
+        <service id="security.user.provider.concrete.yii2_user_provider" alias="security_yii2.user.provider"/>
+        <service id="security.authentication.provider.yii2"
+                 class="maranqz\Bundle\SecurityYii2Bundle\Http\Authentication\Provider\Yii2AuthenticationProvider"
+                 abstract="true">
+            <argument/> <!-- User Provider -->
+            <argument/> <!-- User Checker -->
+            <argument/> <!-- Provider-shared Key -->
+            <argument type="service" id="security.encoder_factory"/>
+            <argument>%security.authentication.hide_user_not_found%</argument>
+        </service>
+        <service id="security.authentication.listener.yii2"
+                 class="maranqz\Bundle\SecurityYii2Bundle\Http\Firewall\Yii2SessionAuthenticationListener"
+                 public="false"
+                 abstract="true">
+            <tag name="monolog.logger" channel="security"/>
+            <argument type="service" id="security.token_storage"/>
+            <argument type="service" id="security.authentication.manager"/>
+            <argument type="service" id="security.authentication.session_strategy"/>
+            <argument/>
+            <argument type="service" id="security.authentication.success_handler"/>
+            <argument type="service" id="security.authentication.failure_handler"/>
+            <argument type="collection"/>
+            <argument type="service" id="logger" on-invalid="null"/>
+            <argument type="service" id="event_dispatcher" on-invalid="null"/>
+        </service>
+    </services>
+</container>

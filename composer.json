@@ -1,0 +1,21 @@
+{
+  "name": "maranqz/security-yii2-bundle",
+  "description": "User statefull authentication in symfony by yii2",
+  "type": "symfony-bundle",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "maranqz",
+      "email": "ilia.sergunin@gmail.com"
+    }
+  ],
+  "minimum-stability": "stable",
+  "require": {
+    "symfony/security": "^4.0"
+  },
+  "autoload": {
+    "psr-4": {
+      "maranqz\\Bundle\\SecurityYii2Bundle\\": ""
+    }
+  }
+}
